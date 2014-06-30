@@ -6,7 +6,11 @@ For a proper Hadoop dev cluster one needs at least 5 nodes: 1 manager, 1 master 
 ####The steps:
 1. Create the permanent disks with the standard Debian 7 image Google provides.
 2. Create VM instances and attach the disks to them.
-3. Partition the disks, so the OS will be able to access the whole capacity.
+3. Partition the disks, so the OS will be able to use the whole capacity.
+4. Set up /etc/hosts to include the well-formed names of the nodes.
+5. Disable swapping for the managed nodes, as it can hurt Hadoop performance.
+6. Configure the manager node to be able to ssh to the managed nodes (gcutil creates a key, which all the nodes accept, so easiest way is to copy that key).
+7. Install Cloudera Manager on the manager node. The console will be shortly available on localhost:7180.
 
 ##Progress
 ###2014.06.30.

@@ -17,17 +17,17 @@ sleep 60
 echo "Nodes are operational"
 echo
 echo "Copying installation file on manager-node------------"
-gcutil push manager-node ./Util/cloudera-manager-installer.bin /home/ujj/cloudera-manager-installer.bin > /dev/null 2>&1 &
+gcutil push manager-node ./Util/cloudera-manager-installer.bin ~/cloudera-manager-installer.bin > /dev/null 2>&1 &
 echo "Don't forget to manually install the service later"
 echo
 echo "Setting up hosts table-------------------------------"
 gcutil listinstances --columns name,network-ip | ./Util/create_hosts_file.py
 echo "Distributing hosts file"
-gcutil push manager-node hosts /home/ujj/ > /dev/null 2>&1 &
-gcutil push master-node hosts /home/ujj/ > /dev/null 2>&1 &
-gcutil push slave-a-node hosts /home/ujj/ > /dev/null 2>&1 &
-gcutil push slave-b-node hosts /home/ujj/ > /dev/null 2>&1 &
-gcutil push slave-c-node hosts /home/ujj/ > /dev/null 2>&1
+gcutil push manager-node hosts ~/ > /dev/null 2>&1 &
+gcutil push master-node hosts ~/ > /dev/null 2>&1 &
+gcutil push slave-a-node hosts ~/ > /dev/null 2>&1 &
+gcutil push slave-b-node hosts ~/ > /dev/null 2>&1 &
+gcutil push slave-c-node hosts ~/ > /dev/null 2>&1
 rm hosts
 sleep 5
 gcutil ssh manager-node 'sudo cp hosts /etc/hosts' > /dev/null 2>&1 &

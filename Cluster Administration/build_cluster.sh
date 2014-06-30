@@ -52,7 +52,7 @@ echo
 echo "Configuring SSH for the manager node-----------------"
 gcutil push manager-node ~/.ssh/google_compute_engine ~/.ssh/ > /dev/null 2>&1
 echo
-echo "Rebooting"-------------------------------------------"
+echo "Rebooting-------------------------------------------"
 gcutil ssh manager-node 'sudo reboot' > /dev/null 2>&1 &
 gcutil ssh master-node 'sudo reboot' > /dev/null 2>&1 &
 gcutil ssh slave-a-node 'sudo reboot' > /dev/null 2>&1 &

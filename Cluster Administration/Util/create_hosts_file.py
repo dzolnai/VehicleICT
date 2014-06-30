@@ -13,4 +13,4 @@ with open('hosts', 'w') as f:
 			if line[0] == 'name':
 				f.write('127.0.0.1 localhost.localdomain localhost\n')
 			else:
-				f.write('{0} {1}.c.hadoop-project-1.internal {1}\n'.format(line[1], line[0]))
+				f.write('{0} {1}.c.vehicle-hadoop-1.internal {1}\n'.format(line[1], line[0]))

@@ -3,15 +3,15 @@
 
 echo "Creating nodes---------------------------------------"
 echo "Creating manager node"
-./Util/create_new_node.sh manager 25 > /dev/null 2>&1 &
+./Util/create_new_node.sh manager 25 2 > /dev/null 2>&1 &
 echo "Creating master node"
-./Util/create_new_node.sh master 25 > /dev/null 2>&1 &
+./Util/create_new_node.sh master 25 2> /dev/null 2>&1 &
 echo "Creating slave node"
-./Util/create_new_node.sh slave-a 25 > /dev/null 2>&1 &
+./Util/create_new_node.sh slave-a 25 1> /dev/null 2>&1 &
 echo "Creating slave node"
-./Util/create_new_node.sh slave-b 25 > /dev/null 2>&1 &
+./Util/create_new_node.sh slave-b 25 1> /dev/null 2>&1 &
 echo "Creating slave node"
-./Util/create_new_node.sh slave-c 25 > /dev/null 2>&1
+./Util/create_new_node.sh slave-c 25 1> /dev/null 2>&1
 echo "Initializing disks (this might take a while)"
 sleep 60
 echo "Nodes are operational"
@@ -49,7 +49,10 @@ gcutil ssh slave-b-node "echo 'vm.swappiness = 0' | sudo tee -a /etc/sysctl.conf
 gcutil ssh slave-c-node "echo 'vm.swappiness = 0' | sudo tee -a /etc/sysctl.conf" > /dev/null 2>&1
 echo "Swapping disabled"
 echo
-echo "Rebooting"
+echo "Configuring SSH for the manager node-----------------"
+gcutil push manager-node ~/.ssh/google_compute_engine ~/.ssh/ > /dev/null 2>&1
+echo
+echo "Rebooting"-------------------------------------------"
 gcutil ssh manager-node 'sudo reboot' > /dev/null 2>&1 &
 gcutil ssh master-node 'sudo reboot' > /dev/null 2>&1 &
 gcutil ssh slave-a-node 'sudo reboot' > /dev/null 2>&1 &

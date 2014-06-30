@@ -17,7 +17,7 @@ sleep 60
 echo "Nodes are operational"
 echo
 echo "Copying installation file on manager-node------------"
-gcutil push manager-node /home/ujj/cloudera-manager-installer.bin /home/ujj/cloudera-manager-installer.bin > /dev/null 2>&1 &
+gcutil push manager-node ./Util/cloudera-manager-installer.bin /home/ujj/cloudera-manager-installer.bin > /dev/null 2>&1 &
 echo "Don't forget to manually install the service later"
 echo
 echo "Setting up hosts table-------------------------------"

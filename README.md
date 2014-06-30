@@ -18,4 +18,4 @@ Note: steps 1-6 are automated by build_cluster.sh, but steps 7-8 need to be done
 ##Progress
 ###2014.06.30.
 * Created scripts for automated cluster management
-* Initialized cluster
+* Built a dev cluster and deployed Hadoop

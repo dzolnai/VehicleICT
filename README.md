@@ -7,6 +7,7 @@ For a proper Hadoop dev cluster one needs at least 5 nodes: 1 manager, 1 master 
 1. Create the permanent disks with the standard Debian 7 image Google provides.
 2. Create VM instances and attach the disks to them.
 3. Partition the disks, so the OS will be able to access the whole capacity.
+
 ##Progress
 ###2014.06.30.
 * Created scripts for automated cluster management

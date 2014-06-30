@@ -3,15 +3,15 @@
 
 echo "Creating nodes---------------------------------------"
 echo "Creating manager node"
-./create_new_node.sh manager 25 > /dev/null 2>&1 &
+./Util/create_new_node.sh manager 25 > /dev/null 2>&1 &
 echo "Creating master node"
-./create_new_node.sh master 25 > /dev/null 2>&1 &
+./Util/create_new_node.sh master 25 > /dev/null 2>&1 &
 echo "Creating slave node"
-./create_new_node.sh slave-a 25 > /dev/null 2>&1 &
+./Util/create_new_node.sh slave-a 25 > /dev/null 2>&1 &
 echo "Creating slave node"
-./create_new_node.sh slave-b 25 > /dev/null 2>&1 &
+./Util/create_new_node.sh slave-b 25 > /dev/null 2>&1 &
 echo "Creating slave node"
-./create_new_node.sh slave-c 25 > /dev/null 2>&1
+./Util/create_new_node.sh slave-c 25 > /dev/null 2>&1
 echo "Initializing disks (this might take a while)"
 sleep 60
 echo "Nodes are operational"

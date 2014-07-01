@@ -7,6 +7,7 @@ gcutil deleteinstance master-node -f --nodelete_boot_pd > /dev/null 2>&1 &
 gcutil deleteinstance slave-a-node -f --nodelete_boot_pd > /dev/null 2>&1 &
 gcutil deleteinstance slave-b-node -f --nodelete_boot_pd > /dev/null 2>&1 &
 gcutil deleteinstance slave-c-node -f --nodelete_boot_pd > /dev/null 2>&1
+sleep 20
 echo "Starting nodes"
 gcutil addinstance manager-node --disk=manager-node-disk,boot --machine_type=n1-standard-2 --zone=europe-west1-b > /dev/null 2>&1 &
 gcutil addinstance master-node --disk=master-node-disk,boot --machine_type=n1-highmem-2 --zone=europe-west1-b > /dev/null 2>&1 &

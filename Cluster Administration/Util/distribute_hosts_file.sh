@@ -1,6 +1,6 @@
 #! /bin/bash
 
-gcutil listinstances --columns name,network-ip | ./create_hosts_file.py
+gcutil listinstances --columns name,network-ip | ./Util/create_hosts_file.py
 gcutil push manager-node hosts ~/
 gcutil push master-node hosts ~/
 gcutil push slave-a-node hosts ~/

@@ -13,7 +13,7 @@ For a proper Hadoop dev cluster one needs at least 5 nodes: 1 manager, 1 master 
 7. Install Cloudera Manager on the manager node. The console will be shortly available at localhost:7180.
 8. Configure CM to find the managed nodes and use it to deploy Hadoop on the managed cluster. (Optionally set up an HBase Thrift Server and 3 ZooKeeper nodes.)
 
-Note: steps 1-6 are automated by *build_cluster.sh*, but steps 7-8 need to be done manually.
+Note: steps 1-6 are automated by **build_cluster.sh, but steps 7-8 need to be done manually.
 
 ##Progress
 ###2014.06.30.

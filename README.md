@@ -17,6 +17,21 @@ Note: steps 1-6 are automated by *build_cluster.sh*, but steps 7-8 need to be do
 ####Tearing down the cluster
 Executing *teardown_cluster.sh* will completely destroy the cluster, throwing away the permanent disks. This can't be undone, so you should use it with care.
 
+###Normal routine
+Being a dev cluster on Google Compute Engine VMs, charges will be incurred for every minute it operates, so you should only operate it when you really need to, and hibernate it otherwise.
+####Starting the cluster
+Starting the cluster is relatively easy, you should consider the following steps:
+1. Start the VMs and attach the permanent disks
+2. As IP addresses always change, when you create new VMs, create the proper /etc/hosts files and distribute it across the cluster nodes
+3. Managed nodes send heartbeats to the manager node based on a configuration file (/etc/cloudera-scm-agent/config.ini), so set the correct IP address in this file on all the nodes
+4. Reboot the managed nodes, in order the configuration changes to take effect
+5. Go to http://manager-node:7180, and start the cluster services with the help of Cloudera Manager
+
+Note: steps 1-4 are automated by *start_cluster.sh*
+
+####Hibernating the cluster
+All you need to do is to stop the cluster services on the CM Console, then execute *hibernate_cluster.sh*, which shuts down the VMs, preserving the permanent disks.
+
 ##Progress
 ###2014.06.30.
 * Created scripts for automated cluster management

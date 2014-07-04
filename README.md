@@ -21,6 +21,7 @@ Executing *teardown_cluster.sh* will completely destroy the cluster, throwing aw
 Being a dev cluster on Google Compute Engine VMs, charges will be incurred for every minute it operates, so you should only operate it when you really need to, and hibernate it otherwise.
 ####Starting the cluster
 Starting the cluster is relatively easy, you should consider the following steps:
+
 1. Start the VMs and attach the permanent disks
 2. As IP addresses always change, when you create new VMs, create the proper /etc/hosts files and distribute it across the cluster nodes
 3. Managed nodes send heartbeats to the manager node based on a configuration file (/etc/cloudera-scm-agent/config.ini), so set the correct IP address in this file on all the nodes

@@ -1,5 +1,7 @@
 #VehicleICT
+j
 ==========
+k
 ##Notes
 ###Building the cluster
 For a proper Hadoop dev cluster one needs at least 5 nodes: 1 manager, 1 master and 3 slaves. The manager node runs Cloudera Manager, which will help us administer the cluster. The master node will take the role of the HDFS NameNode and the YARN ResourceManager, as well as the role of the Secondary NameNode (seems odd to place the Secondary NameNode on the same node as the primary one, but in fact the Secondary NameNode's task is not to replace the primary one, but to support it by occasionally checkpointing the logs... worst naming ever). The slave nodes will run the HDFS DataNode and YARN NodeManager daemons. Other roles will be distributed across all the nodes, to balance load. It's important to note, that the manager and master nodes need a lot of RAM (6-8GB will do for the manager, 10-15GB for the master).
@@ -28,7 +30,7 @@ Starting the cluster is relatively easy, you should consider the following steps
 4. Reboot the managed nodes, in order the configuration changes to take effect
 5. Go to http://manager-node:7180, and start the cluster services with the help of Cloudera Manager
 
-Note: steps 1-4 are automated by *start_cluster.sh*
+Note: steps 1-4 are automated by *start_cluster.sh*.
 
 ####Hibernating the cluster
 All you need to do is to stop the cluster services on the CM Console, then execute *hibernate_cluster.sh*, which shuts down the VMs, preserving the permanent disks.

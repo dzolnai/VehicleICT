@@ -37,3 +37,9 @@ All you need to do is to stop the cluster services on the CM Console, then execu
 ###2014.06.30.
 * Created scripts for automated cluster management
 * Built a dev cluster and deployed Hadoop
+
+###2014.07.01.
+* Created simple webapp2 REST endpoint to receive data
+
+###2014.07.03.
+* Configured Flume to receive data from web server and loading it to HDFS

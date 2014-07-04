@@ -14,7 +14,6 @@ For a proper Hadoop dev cluster one needs at least 5 nodes: 1 manager, 1 master 
 8. Configure CM to find the managed nodes and use it to deploy Hadoop on the managed cluster. (Optionally set up an HBase Thrift Server and 3 ZooKeeper nodes.)
 
 Note: steps 1-6 are automated by *build_cluster.sh*, but steps 7-8 need to be done manually.
-
 ###Tearing down the cluster
 Executing *teardown_cluster.sh* will completely destroy the cluster, throwing away the permanent disks. This can't be undone, so you should use it with care.
 

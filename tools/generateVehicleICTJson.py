@@ -228,11 +228,11 @@ def startNewTrip():
 	# make sure it doesn't go below 0
 	if (gpsSpeed < 0):
 		gpsSpeed = 0.0
-	gpsTime = time.time() * 1000 + random.randint(-10000,10000)
+	gpsTime = int(time.time()) + random.randint(-10,10)
 	timingAdvance = random.uniform(-10, 10)
 	latitude = random.uniform(47.912552, 46.697480)
 	longitude = random.uniform(17.055730, 21.610620)
-	obsTimeOffset = random.randint(-500,500)
+	obsTimeOffset = random.randint(-3,3)
 	massAirFlow = 2.0 + engineRPM / 600.0
 	longTermFuelTrim = random.randint(0,40)
 	shortTermFuelTrim = random.randint(0,40)
@@ -339,7 +339,7 @@ def alterValues():
 	if (gpsSpeed < 0.0):
 		gpsSpeed = 0.0
 	# GPS time increases by 1000 ms
-	gpsTime = gpsTime + 1000
+	gpsTime = gpsTime + 1
 	# Timing advance doesn't change
 	# Direction angle sometimes changes [10% chance to change]
 	if (random.randint(0,99) < 10):

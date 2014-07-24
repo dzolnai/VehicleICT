@@ -18,6 +18,9 @@ __version__ = "1.0"
 # this value defines the amount of JSON to post for a "trip"
 separateBy = 1
 
+# userID is overrideable with a commandline argument
+overridedUserID = None
+
 # global values, which will be in the output
 vehicleSpeed = 0
 avgFuelEcoCount = 0.0
@@ -52,8 +55,8 @@ coolantTemp = 0
 directionAngle = 0.0
 
 def main():
-	#declare the available arguments
 	print("Script started.")
+	#declare the available arguments
 	parser = argparse.ArgumentParser();
 	parser.add_argument("-i", "--ip",
 		help="The IP address of the machine where you want to post the JSON files",
@@ -63,6 +66,9 @@ def main():
 		type=int)
 	parser.add_argument("-a", "--amount", 
 		help="The amount of JSON files to post. Defaults to 1.",
+		type=int)
+	parser.add_argument("-u", "--userid",
+		help="Overrides the user ID. If you use this argument, only one trip will be created, with this user ID.",
 		type=int)
 	args = parser.parse_args()
 	# --- CHECK THE ARGUMENTS ---
@@ -80,6 +86,12 @@ def main():
 	if (amount == None):
 		print("No amount defined, only one random JSON will be posted!")
 		amount = 1
+	# request access to global variable
+	global overridedUserID
+	overridedUserID = args.userid
+	# check if user ID is overrided
+	if (overridedUserID != None):
+		print("Using " + str(overridedUserID) + " as user ID for the trip.")
 	defineSeparator(amount)
 	postJsons(args.ip, port, amount)
 
@@ -98,6 +110,10 @@ def postJsons(destIp, destPort, amount):
 		httpServ.request('POST', '', body=jsonString,
 			headers={'Content-Type': 'application/json; charset=utf-8'})
 		response = httpServ.getresponse()
+		# Uncomment the next line if you want to see if each call succeeded:
+		# print(str(currentIndex) + ". :" + response.status)
+		# next line ensures that multiple requests can be sent
+		response.read()
 		currentIndex = currentIndex + 1
 	# close the connection
 	httpServ.close()
@@ -145,8 +161,9 @@ def generateNextJson(currentIndex):
 def defineSeparator(amount):
 	# request access to global variable
 	global separateBy
-
-	if (amount < 50):
+	if (overridedUserID != None):
+		separateBy = sys.maxint
+	elif (amount < 50):
 		separateBy = 1
 	elif (amount < 200):
 		separateBy = 10
@@ -197,7 +214,10 @@ def startNewTrip():
 	barometricPress = random.randint(130, 300)
 	commandEqRatio = random.uniform(0.9, 1.0)
 	ambientAirTemp = random.randint(-10, 36)
-	userId = random.randint(0, 20)
+	if (overridedUserID == None):
+		userId = random.randint(0, 20)
+	else:
+		userId = overridedUserID
 	engineRPM = random.randint(0, 5500)
 	engineRuntime = random.randint(0, 5000)
 	fuelEco = random.uniform(4.0, 12.0)
@@ -298,7 +318,7 @@ def alterValues():
 	# Engine runtime increases by 1
 	engineRuntime = engineRuntime + 1
 	# Fuel economy stays between 3.0 and 18.0.
-	fuelEco = fuelEco + random.uniform(-0.1, 0.1)
+	fuelEco = fuelEco + random.uniform(-0.05, 0.05)
 	if (fuelEco < 3.0):
 		fuelEco = 3.0
 	elif (fuelEco > 18.0):
@@ -325,8 +345,8 @@ def alterValues():
 	if (random.randint(0,99) < 10):
 		directionAngle = (directionAngle + random.randint(-20,20)) % 360
 	oneMeterInDegrees = 1 / 111111
-	latitude = latitude + sin(directionAngle) * oneMeterInDegrees * gpsSpeed
-	longitude = longitude + cos(directionAngle) * oneMeterInDegrees * gpsSpeed
+	latitude = latitude + math.sin(directionAngle) * oneMeterInDegrees * gpsSpeed
+	longitude = longitude + math.cos(directionAngle) * oneMeterInDegrees * gpsSpeed
 	# Observed time offset doesn't change
 	# Mass air flow canges depending on engine RPM
 	massAirFlow =  2.0 + engineRPM / 600.0

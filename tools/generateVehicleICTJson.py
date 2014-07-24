@@ -18,6 +18,9 @@ __version__ = "1.0"
 # this value defines the amount of JSON to post for a "trip"
 separateBy = 1
 
+# userID is overrideable with a commandline argument
+overridedUserID = None
+
 # global values, which will be in the output
 vehicleSpeed = 0
 avgFuelEcoCount = 0.0
@@ -98,6 +101,10 @@ def postJsons(destIp, destPort, amount):
 		httpServ.request('POST', '', body=jsonString,
 			headers={'Content-Type': 'application/json; charset=utf-8'})
 		response = httpServ.getresponse()
+		# Uncomment the next line if you want to see if each call succeeded:
+		# print(str(currentIndex) + ". :" + response.status)
+		# next line ensures that multiple requests can be sent
+		response.read()
 		currentIndex = currentIndex + 1
 	# close the connection
 	httpServ.close()

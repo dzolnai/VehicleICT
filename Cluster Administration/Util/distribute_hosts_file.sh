@@ -6,13 +6,19 @@ gcutil push master-node hosts ~/
 gcutil push slave-a-node hosts ~/
 gcutil push slave-b-node hosts ~/
 gcutil push slave-c-node hosts ~/
+gcutil push slave-d-node hosts ~/
+gcutil push slave-e-node hosts ~/
 gcutil ssh manager-node 'sudo cp hosts /etc/hosts'
 gcutil ssh master-node 'sudo cp hosts /etc/hosts'
 gcutil ssh slave-a-node 'sudo cp hosts /etc/hosts'
 gcutil ssh slave-b-node 'sudo cp hosts /etc/hosts'
 gcutil ssh slave-c-node 'sudo cp hosts /etc/hosts'
+gcutil ssh slave-d-node 'sudo cp hosts /etc/hosts'
+gcutil ssh slave-e-node 'sudo cp hosts /etc/hosts'
 gcutil ssh manager-node 'rm ~/hosts'
 gcutil ssh master-node 'rm ~/hosts'
 gcutil ssh slave-a-node 'rm ~/hosts'
 gcutil ssh slave-b-node 'rm ~/hosts'
 gcutil ssh slave-c-node 'rm ~/hosts'
+gcutil ssh slave-d-node 'rm ~/hosts'
+gcutil ssh slave-e-node 'rm ~/hosts'

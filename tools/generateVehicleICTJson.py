@@ -6,7 +6,7 @@ import math
 import json
 import argparse
 import sys
-import httplib
+import urllib2
 import time
 
 """ generateVehicleICTJson.py: Generates fake, but believable sensor data, for the Vehicle ICT project.
@@ -58,29 +58,21 @@ def main():
 	print("Script started.")
 	#declare the available arguments
 	parser = argparse.ArgumentParser();
-	parser.add_argument("-i", "--ip",
-		help="The IP address of the machine where you want to post the JSON files",
+	parser.add_argument("-u", "--url",
+		help="The URL where the json should be posted.",
 		type=str)
-	parser.add_argument("-p", "--port",
-		help="The port associated to the IP address, defaults to 80.",
-		type=int)
-	parser.add_argument("-a", "--amount", 
+	parser.add_argument("-n", "--amount", 
 		help="The amount of JSON files to post. Defaults to 1.",
 		type=int)
-	parser.add_argument("-u", "--userid",
+	parser.add_argument("-id", "--userid",
 		help="Overrides the user ID. If you use this argument, only one trip will be created, with this user ID.",
 		type=int)
 	args = parser.parse_args()
 	# --- CHECK THE ARGUMENTS ---
 	# check if IP was defined
-	if (args.ip == None):
-		print("No IP address given. Use the -i parameter to define the IP address of the server.")
+	if (args.url == None):
+		print("No URL given. Use the -a parameter to define the URL address of the server.")
 		sys.exit(0)
-	port = args.port
-	# if no port given, default to 80
-	if (port == None):
-		print("No port defined, using port number 80!")
-		port = 80
 	amount = args.amount
 	# if no amount given, default to 1
 	if (amount == None):
@@ -93,13 +85,11 @@ def main():
 	if (overridedUserID != None):
 		print("Using " + str(overridedUserID) + " as user ID for the trip.")
 	defineSeparator(amount)
-	postJsons(args.ip, port, amount)
+	postJsons(args.url, amount)
 
 
-def postJsons(destIp, destPort, amount):
+def postJsons(url, amount):
 	# create the connection
-	httpServ = httplib.HTTPConnection(destIp, port=str(destPort))
-	httpServ.connect()
 	print("Connection created.")
 	currentIndex = 0
 	# post the jsons
@@ -107,16 +97,15 @@ def postJsons(destIp, destPort, amount):
 		jsonString = generateNextJson(currentIndex)
 		# Uncomment the next line if you want to see the generated json
 		# print(jsonString)
-		httpServ.request('POST', '', body=jsonString,
-			headers={'Content-Type': 'application/json; charset=utf-8'})
-		response = httpServ.getresponse()
+		req = urllib2.Request(url)
+		req.data = jsonString
+		req.add_header('Content-Type','application/json; charset=utf-8')
+		response = urllib2.urlopen(req)
 		# Uncomment the next line if you want to see if each call succeeded:
 		# print(str(currentIndex) + ". :" + response.status)
 		# next line ensures that multiple requests can be sent
 		response.read()
 		currentIndex = currentIndex + 1
-	# close the connection
-	httpServ.close()
 	print("Connection closed.")
 
 def generateNextJson(currentIndex):
@@ -215,7 +204,8 @@ def startNewTrip():
 	commandEqRatio = random.uniform(0.9, 1.0)
 	ambientAirTemp = random.randint(-10, 36)
 	if (overridedUserID == None):
-		userId = random.randint(0, 20)
+		# users between 2 and 99 are the test user
+		userId = random.randint(2, 99)
 	else:
 		userId = overridedUserID
 	engineRPM = random.randint(0, 5500)
